@@ -22,5 +22,35 @@ window.onload = function() {
     layout: "StandaloneLayout"
   });
 
+  const observer = new MutationObserver(() => {
+    const uiReady =
+      window.ui &&
+      window.ui.specActions &&
+      typeof window.ui.specActions.updateUrl === 'function';
+
+    if (!uiReady) return;
+
+    observer.disconnect();
+
+    const updateUrl = window.ui.specActions.updateUrl;
+
+    // Function override
+    window.ui.specActions.updateUrl = function (url) {
+
+      if (url.includes("full-list")) {
+        window.ui.getConfigs().supportedSubmitMethods = [];
+      } else {
+        window.ui.getConfigs().supportedSubmitMethods = ["get", "post"];
+      }
+
+      return updateUrl.apply(this, arguments);
+    }
+  });
+
+  const swaggerUI = document.getElementById('swagger-ui');
+  if (swaggerUI) {
+    observer.observe(swaggerUI, { childList: true, subtree: true });
+  }
+
   //</editor-fold>
 };
