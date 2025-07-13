@@ -1,15 +1,15 @@
 openapi: 3.0.4
 info:
-  title: Hawaii Climate Data Portal APIs
-  description: This document contains the HCDP API descriptions and examples. Use of these APIs requires a token to authenticate. Go to the HCDP website to fill out the request form.
+  title: Hawaii Climate Data Portal APIs (Full list/Read only)
+  description: |
+    This document contains the full list of HCDP API descriptions with examples. Use of these APIs requires a token to authenticate. Go to the HCDP website to fill out the request form.
+    
+    Switch to "Interactive Docs" to try out the API endpoints
   version: V1
   
 servers:
   - url: https://api.hcdp.ikewai.org
     description: API base URL
-    
-security:
-  - Authorization: []
     
 tags:
   - name: raster
@@ -186,21 +186,6 @@ paths:
             text/plain:
               schema:
                 type: string
-           
-  /genzip/instant/content:
-    post:
-      tags: [genzip]
-      summary: Generates a zip file containing the requested files described by the data array and returns the contents
-      description: |
-        Example cURL:
-        - curl -d '{"email":"<email>","data":[{"datatype":"rainfall","production":"new","period":"month","extent":"statewide","range":{"start":"2019-01","end":"2022-05"},"files":["data_map","metadata"]}]}' -X POST -k -H "Content-Type: application/json" -H "Authorization: Bearer <API-AUTH-TOKEN>" "https://api.hcdp.ikewai.org/genzip/instant/content"
-      requestBody:
-        $ref: '#/components/requestBodies/GenzipRequest'
-      responses:
-        '200':
-          description: Success
-        '401':
-          description: Unauthorized access
           
   /genzip/instant/link:
     post:
@@ -886,11 +871,3 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MesonetRequestHeaderContent'
-              
-              
-  securitySchemes:
-    Authorization:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Must start with "Bearer " (space after Bearer), followed by your API key
