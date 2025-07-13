@@ -5,8 +5,8 @@ window.onload = function() {
   window.ui = SwaggerUIBundle({
     //url: "swagger.yaml",
     urls: [
-      { url: "/full-list.yaml", name: "Full API Endpoint List" },
-      { url: "/try-it-out.yaml", name: "Interactive Docs" }
+      { url: "full-list.yaml", name: "Full API Endpoint List" },
+      { url: "try-it-out.yaml", name: "Interactive Docs" }
     ],
     "urls.primaryName": "Full API Endpoint List",
     dom_id: '#swagger-ui',
