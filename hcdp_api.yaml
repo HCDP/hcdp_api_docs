@@ -10,6 +10,9 @@ info:
 servers:
   - url: https://api.hcdp.ikewai.org
     description: API base URL
+
+security:
+  - Authorization: []
     
 tags:
   - name: raster
@@ -891,3 +894,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MesonetRequestHeaderContent'
+
+
+  securitySchemes:
+    Authorization:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Must start with "Bearer " (space after Bearer), followed by your API key
