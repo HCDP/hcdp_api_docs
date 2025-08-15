@@ -1,5 +1,7 @@
 name: Build SDK on branch push
 
+# Template: https://github.com/stainless-api/upload-openapi-spec-action/blob/main/examples/push.yml
+
 on:
   push:
     # Set this to the branch of the repository that the `main` Stainless branch
@@ -50,6 +52,5 @@ jobs:
           stainless_api_key: ${{ secrets.STAINLESS_API_KEY }}
           project: ${{ env.STAINLESS_PROJECT }}
           oas_path: ${{ env.OAS_PATH }}
-          # config_path: ${{ env.CONFIG_PATH }}
           commit_message: ${{ env.COMMIT_MESSAGE }}
           fail_on: ${{ env.FAIL_ON }}
