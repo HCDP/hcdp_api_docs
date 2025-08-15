@@ -726,10 +726,17 @@ components:
     prod:
       type: string
       enum: [new, legacy]
+      description: |
+        new
+        - New rainfall data (1990-present)
+        
+        legacy
+        - Legacy rainfall data (monthly only, 1920-2012)
 
     aggregation:
       type: string
       enum: [min, max, mean]
+      description: Temperature aggregations
 
     period:
       type: string
@@ -738,6 +745,23 @@ components:
     extent:
       type: string
       enum: [statewide, bi, ka, oa, mn]
+      description: |
+        Statewide is available for all relevant datasets. Not all datasets have maps broken down by county
+        
+        statewide
+        - Data for the whole state
+        
+        bi
+        - Data for Hawaii county (Big Island)
+        
+        ka
+        - Data for Kauai County
+        
+        mn
+        - Data for Maui County
+        
+        oa
+        - Data for Honolulu County
 
     date:
       type: string
@@ -753,6 +777,26 @@ components:
     filetypes:
       type: string
       enum: [data_map, se, anom, anom_se, metadata, station_data]
+      description: |
+        data_map, se, metadata, and station_data are applicable to both rainfall and temperature data
+      
+        data_map
+        - Gridded map data (extension .tif)
+        
+        se
+        - Gridded standard error map (.tif)
+        
+        anom
+        - Gridded anomaly map (.tif)
+        
+        anom_se
+        - Gridded anomaly standard error map (.tif)
+        
+        metadata
+        - Gridded data product metadata (.txt)
+        
+        station_data
+        - Station data (.csv)
 
     files:
       type: array
@@ -783,6 +827,8 @@ components:
                 $ref: '#/components/schemas/date'
           files:
             $ref: '#/components/schemas/files'
+      description: |
+        An array of JSON objects containing fields that specify the files needed by user
 
     GenzipRequestHeaderContent:
       type: object
@@ -793,6 +839,8 @@ components:
           example: 'user@email.com'
         data:
           $ref: '#/components/schemas/GenzipDataSpecification'
+      description: |
+        The array of JSON objects that specify the data requested by user and the email to send the zipped data to
 
     StationMetaData:
       type: string
@@ -801,15 +849,19 @@ components:
 
     StationValue:
       type: string
-      # ?: for non-capturing groups
       # for now, make value.station_id the only optional group
-      description: e.g. {'name':'hcdp_station_value','value.date':'2022-03-08','value.period':'day','value.fill':'raw','value.datatype':'temperature','value.aggregation':'max'}
+      description: |
+        Properties in JSON format, which describe the dataset (a document containing the value of the specified station for the given date) being requested.  
+        
+        e.g. {'name':'hcdp_station_value','value.date':'2022-03-08','value.period':'day','value.fill':'raw','value.datatype':'temperature','value.aggregation':'max'}
       pattern: "^{'name':'hcdp_station_value'(?:,'value.station_id':'([0-9]{4})'),'value.date':'(((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2]))|((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])))','value.datatype':'(temperature|rainfall)','value.period':'(month|day)','value.fill':(raw|partial),(('value.production':'(new|legacy)')|('value.aggregation':'(min|max|mean)'))$}"
-      example:
 
     StationTimeSeries:
       type: string
-      description: e.g. {'$and':[{'name':'hcdp_station_value','value.station_id':'1094.2','value.period':'month','value.fill':'partial','value.datatype':'rainfall','value.production':'new'},{'value.date':{'$gte':'1994-01'}},{'value.date':{'$lt':'1995-01'}}]}
+      description: |
+        Properties in JSON format, which describe the dataset (data for the specified station between the provided dates) being requested.
+      
+        e.g. {'$and':[{'name':'hcdp_station_value','value.station_id':'1094.2','value.period':'month','value.fill':'partial','value.datatype':'rainfall','value.production':'new'},{'value.date':{'$gte':'1994-01'}},{'value.date':{'$lt':'1995-01'}}]}
       pattern: "^\\{'\\$and':\\[\\{'name':'test1'(?:,'value\\.station_id':'\\d{4}')?,'value\\.date':'((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])|((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])))','value\\.datatype':'(temperature|rainfall)','value\\.period':'(month|day)','value\\.fill':'(raw|partial)',(('value\\.production':'(new|legacy)')|('value\\.aggregation':'(min|max|mean)'))},\\{'value\\.date':\\{'\\$gte':'((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])|((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])))'\\}\\},\\{'value\\.date':\\{'\\$lt':'((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])|((199[0-9]|20[0-9]{2})-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])))'\\}\\}\\]\\}$"
 
     MesonetDataSpecification:
