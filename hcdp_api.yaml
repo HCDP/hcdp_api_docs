@@ -812,6 +812,11 @@ components:
       enum: [min, max, mean]
       description: Temperature aggregations, valid only where datatype = temperature
 
+    timescale:
+      type: string
+      enum: [timescale001, timescale003, timescale006, timescale009, timescale012, timescale024, timescale036, timescale048, timescale060]
+      description: The period over which the drought is evaluated, valid only where datatype = spi
+
     period:
       type: string
       enum: [month, day]
