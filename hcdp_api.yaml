@@ -58,7 +58,7 @@ paths:
             $ref: '#/components/schemas/extent'
         - name: production
           in: query
-          description: rainfall products (use when datatype=rainfall)
+          description: rainfall production methodology (use when datatype=rainfall)
           schema:
             $ref: '#/components/schemas/production'
         - name: aggregation
@@ -66,6 +66,11 @@ paths:
           description: temperature aggregations (use when datatype=temperature)
           schema:
             $ref: '#/components/schemas/aggregation'
+        - name: timescale
+          in: query
+          description: The timescale over which the measurement was taken (use when datatype=spi)
+          schema:
+            $ref: '#/components/schemas/timescale'
         - name: period
           in: query
           schema:
@@ -155,6 +160,11 @@ paths:
           description: temperature aggregations (use when datatype=temperature)
           schema:
             $ref: '#/components/schemas/aggregation'
+        - name: timescale
+          in: query
+          description: The timescale over which the measurement was taken (use when datatype=spi)
+          schema:
+            $ref: '#/components/schemas/timescale'
         - name: period
           in: query
           schema:
@@ -426,6 +436,11 @@ paths:
           description: temperature aggregations (use when datatype=temperature)
           schema:
             $ref: '#/components/schemas/aggregation'
+        - name: timescale
+          in: query
+          description: The timescale over which the measurement was taken (use when datatype=spi)
+          schema:
+            $ref: '#/components/schemas/timescale'
         - name: period
           in: query
           required: true
@@ -874,6 +889,8 @@ components:
             $ref: '#/components/schemas/datatype'
           production:
             $ref: '#/components/schemas/production'
+          timescale:
+            $ref: '#/components/schemas/timescale'
           aggregation:
             $ref: '#/components/schemas/aggregation'
           period:
